@@ -4,6 +4,36 @@
 
 当前为原型阶段：本机 Modbus/MQTT 通信与数据质量逻辑已验证；ThingsBoard 看板、平台告警以及 IoTGateway 完整链路仍需部署和联调。
 
+## 运行效果
+
+以下图片截取自本机实测输出生成的运行记录展示页。原始输出保存在 [runtime-record.json](docs/runtime/runtime-record.json)，可用 [capture_runtime.py](tools/capture_runtime.py) 重新运行并生成展示页。
+
+### 电机数据采集与健康检查
+
+通过 Modbus 读取六个测点并恢复温度、电流单位，C# 检查报告通信成功、数据有效。
+
+![电机数据采集与健康检查的实际运行输出](assets/images/runtime-normal.png)
+
+### 数据冻结与通信中断
+
+冻结工况下，实际持续轮询到数据超过 15 秒未更新，`stale=1`、`data_valid=0`；停止模拟器后，`comm_ok=0`。
+
+![数据冻结与通信中断的实际识别结果](assets/images/runtime-quality.png)
+
+### 自动检查与本机通信验证
+
+四项 Python 检查、六项 C# 自检及 Modbus/MQTT 通信检查全部通过。图中保留了模拟器启动阶段的连接重试日志，最终退出码为 0。
+
+![自动检查与本机通信验证的实际输出](assets/images/runtime-tests.png)
+
+重新生成运行记录和展示页：
+
+```powershell
+.\.venv\Scripts\python.exe .\tools\capture_runtime.py
+```
+
+请先按下文安装依赖并编译 C# 项目。脚本会实际等待冻结工况超过 15 秒，关闭本次自建进程后保存输出；在浏览器打开 `docs/runtime/` 下的 HTML 文件即可查看展示页并重新截图。
+
 ## 功能
 
 - 六个测点：绕组温度、轴承温度、电流、转速、运行状态、采样序号。
@@ -16,12 +46,14 @@
 ## 目录
 
 ```text
+assets/images/                三张运行效果图片
 configs/
   compose.yaml                ThingsBoard 与数据库部署配置
   寄存器映射.csv              Modbus 地址、类型、单位和缩放规则
 docs/
   architecture.md             数据流、字段和网关接入约定
   validation.md               验证范围及当前限制
+  runtime/                    本机实测记录与展示页
 src/
   motor_simulator.py          电机模拟器
   read_modbus.py              独立读数工具
@@ -31,6 +63,8 @@ src/
 tests/
   test_samples.py             四项数据和工况检查
   check_protocols.py          本机 Modbus、MQTT 和 C# 联调检查
+tools/
+  capture_runtime.py          运行并保存正常、冻结、断线和检查输出
 .env.example                  本地数据库配置模板
 ```
 

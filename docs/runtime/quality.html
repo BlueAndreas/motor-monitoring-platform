@@ -1,0 +1,30 @@
+<!doctype html><html lang='zh-CN'><meta charset='utf-8'><title>冻结与断线异常识别</title><style>
+*{box-sizing:border-box}body{margin:0;padding:32px;background:#f3f6fa;color:#17283d;font-family:'Segoe UI','Microsoft YaHei',sans-serif}
+main{max-width:1120px;margin:auto}.eyebrow{color:#51728f;font-size:13px;font-weight:700;letter-spacing:2px}h1{font-size:30px;line-height:1.4;margin:10px 0 8px}
+.sub{font-size:15px;line-height:1.7;color:#65758a;margin:0 0 22px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{background:#fff;border:1px solid #d9e2ee;border-radius:12px;padding:22px}h2{font-size:19px;margin:0 0 18px}h3{font-size:16px;margin:12px 0}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metric{background:#f5f8fc;border-radius:8px;padding:15px 12px}.label{font-size:13px;color:#68798c;line-height:1.5}.value{font-size:28px;font-weight:650;margin:7px 0}.unit{font-size:13px;color:#68798c;font-weight:400}
+.tag{display:inline-block;border-radius:5px;padding:5px 10px;background:#e7f6ee;color:#176843;font-size:13px;font-weight:650}.orange{background:#fff1d7;color:#985600}.red{background:#fde9e9;color:#a63232}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;padding:10px 7px;border-bottom:1px solid #e5ebf3}th{color:#718399;font-weight:500}
+.spacer{margin-top:20px}pre{white-space:pre-wrap;word-break:break-word;margin:0;background:#112337;color:#dbe8f6;border-radius:8px;padding:18px;font:14px/1.65 Consolas,'Microsoft YaHei',monospace}
+.note{font-size:13px;color:#6f8094;line-height:1.65;margin:16px 0 0}.command{font:13px/1.5 Consolas,'Microsoft YaHei',monospace;color:#496881;margin:0 0 12px;overflow-wrap:anywhere}
+.status{display:flex;gap:15px;margin-bottom:18px;flex-wrap:wrap}.footer{font-size:12px;color:#6f8094;margin-top:20px;text-align:right}
+</style><main><div class='eyebrow'>MOTOR MONITORING · LOCAL RUNTIME RECORD</div><h1>冻结与断线异常识别</h1><p class='sub'>区分“连接正常但数据停更”和“设备无法连接”，避免把旧值当作有效数据。</p><div class='grid'><section class='panel'><h2>数据冻结 · 连接仍然可用</h2><span class='tag orange'>序号 16.1 秒未更新，数据已过期</span><div class='spacer'><pre>{
+  &quot;comm_ok&quot;: 1,
+  &quot;stale&quot;: 1,
+  &quot;data_valid&quot;: 0,
+  &quot;data_age_s&quot;: 16.1,
+  &quot;last_poll_ok_ts&quot;: 1791453461847,
+  &quot;last_sample_change_ts&quot;: 1791453445755,
+  &quot;last_error&quot;: &quot;&quot;
+}</pre></div><p class='note'>持续运行 C# 轮询，实际等待超过 15 秒后取得该结果。</p></section>
+<section class='panel'><h2>通信中断 · 模拟器已停止</h2><span class='tag red'>comm_ok = 0 · data_valid = 0</span><div class='spacer'><pre>{
+  &quot;comm_ok&quot;: 0,
+  &quot;stale&quot;: 1,
+  &quot;data_valid&quot;: 0,
+  &quot;data_age_s&quot;: -1,
+  &quot;last_poll_ok_ts&quot;: 0,
+  &quot;last_sample_change_ts&quot;: 0,
+  &quot;last_error&quot;: &quot;SocketException&quot;
+}</pre></div><p class='note'>停止本次自建模拟器，再次读取时报告通信失败。</p></section></div>
+<section class='panel spacer'><h2>冻结工况的连续轮询记录</h2><table><tr><th>未更新时长 / s</th><th>comm_ok</th><th>stale</th><th>data_valid</th></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr><td>2</td><td>1</td><td>0</td><td>1</td></tr><tr><td>4</td><td>1</td><td>0</td><td>1</td></tr><tr><td>6.1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>8.1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>10.1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>12.1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>14.1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>16.1</td><td>1</td><td>1</td><td>0</td></tr></table></section><div class='footer'>原型实际输出展示 · 原始记录见 runtime-record.json</div></main></html>

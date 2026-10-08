@@ -1,0 +1,30 @@
+<!doctype html><html lang='zh-CN'><meta charset='utf-8'><title>自动检查与通信验证</title><style>
+*{box-sizing:border-box}body{margin:0;padding:32px;background:#f3f6fa;color:#17283d;font-family:'Segoe UI','Microsoft YaHei',sans-serif}
+main{max-width:1120px;margin:auto}.eyebrow{color:#51728f;font-size:13px;font-weight:700;letter-spacing:2px}h1{font-size:30px;line-height:1.4;margin:10px 0 8px}
+.sub{font-size:15px;line-height:1.7;color:#65758a;margin:0 0 22px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{background:#fff;border:1px solid #d9e2ee;border-radius:12px;padding:22px}h2{font-size:19px;margin:0 0 18px}h3{font-size:16px;margin:12px 0}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metric{background:#f5f8fc;border-radius:8px;padding:15px 12px}.label{font-size:13px;color:#68798c;line-height:1.5}.value{font-size:28px;font-weight:650;margin:7px 0}.unit{font-size:13px;color:#68798c;font-weight:400}
+.tag{display:inline-block;border-radius:5px;padding:5px 10px;background:#e7f6ee;color:#176843;font-size:13px;font-weight:650}.orange{background:#fff1d7;color:#985600}.red{background:#fde9e9;color:#a63232}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;padding:10px 7px;border-bottom:1px solid #e5ebf3}th{color:#718399;font-weight:500}
+.spacer{margin-top:20px}pre{white-space:pre-wrap;word-break:break-word;margin:0;background:#112337;color:#dbe8f6;border-radius:8px;padding:18px;font:14px/1.65 Consolas,'Microsoft YaHei',monospace}
+.note{font-size:13px;color:#6f8094;line-height:1.65;margin:16px 0 0}.command{font:13px/1.5 Consolas,'Microsoft YaHei',monospace;color:#496881;margin:0 0 12px;overflow-wrap:anywhere}
+.status{display:flex;gap:15px;margin-bottom:18px;flex-wrap:wrap}.footer{font-size:12px;color:#6f8094;margin-top:20px;text-align:right}
+</style><main><div class='eyebrow'>MOTOR MONITORING · LOCAL RUNTIME RECORD</div><h1>自动检查与通信验证</h1><p class='sub'>以下为本次执行的原始输出；MQTT 检查使用本机临时协议测试服务。</p><section class='panel spacer'><h2>Python · 四项数据检查 <span class='tag'>退出码 0</span></h2><div class='command'>python -m unittest discover -s tests -p test_*.py -v</div><pre>test_fault_scenarios (test_samples.SampleTests.test_fault_scenarios) ... ok
+test_freeze_and_counter_wrap (test_samples.SampleTests.test_freeze_and_counter_wrap) ... ok
+test_register_scaling (test_samples.SampleTests.test_register_scaling) ... ok
+test_short_spike_and_recovery (test_samples.SampleTests.test_short_spike_and_recovery) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK</pre></section><section class='panel spacer'><h2>C# · 六项质量逻辑自检 <span class='tag'>退出码 0</span></h2><div class='command'>dotnet run --project src/HealthWatcher --no-build -- --self-test</div><pre>通过：首次采样有效
+通过：14 秒未更新仍在演示时限内
+通过：16 秒未更新判为过期
+通过：通信失败不能继续当成有效数据
+通过：非法运行状态被识别
+通过：采样序号回绕后仍能识别新数据
+六项质量逻辑自检完成。</pre></section><section class='panel spacer'><h2>本机 Modbus / MQTT 通信验证 <span class='tag'>退出码 0</span></h2><div class='command'>python tests/check_protocols.py</div><pre>通过：C# 六项质量逻辑自检
+通过：真实本机 Modbus 读数、缩放和 C# 网络读取
+通过：模拟器停止后的通信异常识别
+通过：MQTT 本机协议测试，三条 JSON 遥测及 QoS 1 确认
+Connection to (127.0.0.1, 11175) failed: timed out</pre></section><div class='footer'>原型实际输出展示 · 原始记录见 runtime-record.json</div></main></html>

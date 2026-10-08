@@ -1,0 +1,167 @@
+{
+  "captured_at_utc": "2026-10-08T09:57:22.306531+00:00",
+  "scope": "Actual local prototype output; HTML pages visualize captured records, not a ThingsBoard dashboard.",
+  "normal": {
+    "telemetry": {
+      "winding_temp_c": 55.0,
+      "bearing_temp_c": 45.0,
+      "current_a": 8.0,
+      "speed_rpm": 1480,
+      "running": 1,
+      "sample_seq": 0
+    },
+    "modbus_read": {
+      "command": "python src/read_modbus.py --port <本机临时端口>",
+      "stdout": "原始整数： [550, 450, 80, 1480, 1, 0]\n还原数值： {\"winding_temp_c\": 55.0, \"bearing_temp_c\": 45.0, \"current_a\": 8.0, \"speed_rpm\": 1480, \"running\": 1, \"sample_seq\": 0}\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "health": {
+      "comm_ok": 1,
+      "stale": 0,
+      "data_valid": 1,
+      "data_age_s": 0,
+      "last_poll_ok_ts": 1791453443067,
+      "last_sample_change_ts": 1791453443067,
+      "last_error": ""
+    },
+    "health_output": {
+      "command": "dotnet run --project src/HealthWatcher --no-build -- --once",
+      "stdout": "健康检查开始；每约 2 秒读取一次；Ctrl+C 停止。\n未设置 TB_HEALTH_TOKEN：只输出终端日志。\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":0,\"last_poll_ok_ts\":1791453443067,\"last_sample_change_ts\":1791453443067,\"last_error\":\"\"}\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "disconnected": {
+      "comm_ok": 0,
+      "stale": 1,
+      "data_valid": 0,
+      "data_age_s": -1,
+      "last_poll_ok_ts": 0,
+      "last_sample_change_ts": 0,
+      "last_error": "SocketException"
+    },
+    "disconnected_output": {
+      "command": "停止模拟器后再次运行 HealthWatcher --once",
+      "stdout": "健康检查开始；每约 2 秒读取一次；Ctrl+C 停止。\n未设置 TB_HEALTH_TOKEN：只输出终端日志。\n{\"comm_ok\":0,\"stale\":1,\"data_valid\":0,\"data_age_s\":-1,\"last_poll_ok_ts\":0,\"last_sample_change_ts\":0,\"last_error\":\"SocketException\"}\n",
+      "stderr": "",
+      "exit_code": 0
+    }
+  },
+  "frozen": {
+    "command": "python src/motor_simulator.py --mode modbus --scenario freeze",
+    "health_command": "dotnet run --project src/HealthWatcher --no-build",
+    "stdout": "健康检查开始；每约 2 秒读取一次；Ctrl+C 停止。\n未设置 TB_HEALTH_TOKEN：只输出终端日志。\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":0,\"last_poll_ok_ts\":1791453445755,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":2,\"last_poll_ok_ts\":1791453447802,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":4,\"last_poll_ok_ts\":1791453449805,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":6.1,\"last_poll_ok_ts\":1791453451809,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":8.1,\"last_poll_ok_ts\":1791453453810,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":10.1,\"last_poll_ok_ts\":1791453455827,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":12.1,\"last_poll_ok_ts\":1791453457829,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n{\"comm_ok\":1,\"stale\":0,\"data_valid\":1,\"data_age_s\":14.1,\"last_poll_ok_ts\":1791453459844,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n{\"comm_ok\":1,\"stale\":1,\"data_valid\":0,\"data_age_s\":16.1,\"last_poll_ok_ts\":1791453461847,\"last_sample_change_ts\":1791453445755,\"last_error\":\"\"}\n",
+    "history": [
+      {
+        "comm_ok": 1,
+        "stale": 0,
+        "data_valid": 1,
+        "data_age_s": 0,
+        "last_poll_ok_ts": 1791453445755,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      },
+      {
+        "comm_ok": 1,
+        "stale": 0,
+        "data_valid": 1,
+        "data_age_s": 2,
+        "last_poll_ok_ts": 1791453447802,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      },
+      {
+        "comm_ok": 1,
+        "stale": 0,
+        "data_valid": 1,
+        "data_age_s": 4,
+        "last_poll_ok_ts": 1791453449805,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      },
+      {
+        "comm_ok": 1,
+        "stale": 0,
+        "data_valid": 1,
+        "data_age_s": 6.1,
+        "last_poll_ok_ts": 1791453451809,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      },
+      {
+        "comm_ok": 1,
+        "stale": 0,
+        "data_valid": 1,
+        "data_age_s": 8.1,
+        "last_poll_ok_ts": 1791453453810,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      },
+      {
+        "comm_ok": 1,
+        "stale": 0,
+        "data_valid": 1,
+        "data_age_s": 10.1,
+        "last_poll_ok_ts": 1791453455827,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      },
+      {
+        "comm_ok": 1,
+        "stale": 0,
+        "data_valid": 1,
+        "data_age_s": 12.1,
+        "last_poll_ok_ts": 1791453457829,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      },
+      {
+        "comm_ok": 1,
+        "stale": 0,
+        "data_valid": 1,
+        "data_age_s": 14.1,
+        "last_poll_ok_ts": 1791453459844,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      },
+      {
+        "comm_ok": 1,
+        "stale": 1,
+        "data_valid": 0,
+        "data_age_s": 16.1,
+        "last_poll_ok_ts": 1791453461847,
+        "last_sample_change_ts": 1791453445755,
+        "last_error": ""
+      }
+    ],
+    "last_health": {
+      "comm_ok": 1,
+      "stale": 1,
+      "data_valid": 0,
+      "data_age_s": 16.1,
+      "last_poll_ok_ts": 1791453461847,
+      "last_sample_change_ts": 1791453445755,
+      "last_error": ""
+    }
+  },
+  "tests": {
+    "python": {
+      "command": "python -m unittest discover -s tests -p test_*.py -v",
+      "stdout": "",
+      "stderr": "test_fault_scenarios (test_samples.SampleTests.test_fault_scenarios) ... ok\ntest_freeze_and_counter_wrap (test_samples.SampleTests.test_freeze_and_counter_wrap) ... ok\ntest_register_scaling (test_samples.SampleTests.test_register_scaling) ... ok\ntest_short_spike_and_recovery (test_samples.SampleTests.test_short_spike_and_recovery) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+      "exit_code": 0
+    },
+    "csharp": {
+      "command": "dotnet run --project src/HealthWatcher --no-build -- --self-test",
+      "stdout": "通过：首次采样有效\n通过：14 秒未更新仍在演示时限内\n通过：16 秒未更新判为过期\n通过：通信失败不能继续当成有效数据\n通过：非法运行状态被识别\n通过：采样序号回绕后仍能识别新数据\n六项质量逻辑自检完成。\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "protocols": {
+      "command": "python tests/check_protocols.py",
+      "stdout": "通过：C# 六项质量逻辑自检\n通过：真实本机 Modbus 读数、缩放和 C# 网络读取\n通过：模拟器停止后的通信异常识别\n通过：MQTT 本机协议测试，三条 JSON 遥测及 QoS 1 确认\n",
+      "stderr": "Connection to (127.0.0.1, 11175) failed: timed out\n",
+      "exit_code": 0
+    }
+  }
+}
