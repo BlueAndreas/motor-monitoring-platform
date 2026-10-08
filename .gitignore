@@ -1,0 +1,29 @@
+# Local environments and build output
+.venv/
+.qa/
+**/__pycache__/
+**/bin/
+**/obj/
+*.py[cod]
+.vs/
+.idea/
+.vscode/
+
+# Local credentials, data and logs
+.env
+.env.*
+!.env.example
+data/
+vendor/
+*.log
+*.pem
+*.key
+*.pfx
+
+# Course material and personal records
+[0-9][0-9]_*.md
+docs/学习记录.md
+docs/测试记录.csv
+evidence/
+*.docx
+*.pdf

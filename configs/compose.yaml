@@ -1,0 +1,29 @@
+name: motor-monitoring-platform
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: thingsboard
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - ../data/postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d thingsboard"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  thingsboard:
+    image: thingsboard/tb-node:4.3.1.6
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      TB_SERVICE_ID: motor-monitor
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/thingsboard
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      TB_QUEUE_TYPE: in-memory
+    ports:
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:1883:1883"

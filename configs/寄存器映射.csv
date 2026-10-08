@@ -1,0 +1,7 @@
+﻿协议地址,字段名称,数据类型,方法,缩放表达式,单位或编码
+0,winding_temp_c,Uint16,HoldingRegisters,raw * 0.1,℃
+1,bearing_temp_c,Uint16,HoldingRegisters,raw * 0.1,℃
+2,current_a,Uint16,HoldingRegisters,raw * 0.1,A
+3,speed_rpm,Uint16,HoldingRegisters,,r/min
+4,running,Uint16,HoldingRegisters,,0停机或1运行
+5,sample_seq,Uint16,HoldingRegisters,,采样序号
